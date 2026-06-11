@@ -1,4 +1,4 @@
-60<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -278,7 +278,17 @@ details h3{
 @media(max-width:520px){
     .panel-carrito{bottom:84px;}
 }
+<style>
+.parpadeo {
+    animation: parpadear 1.5s infinite;
+}
 
+@keyframes parpadear {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+            
 
 /* ===== Cliente V1.1 Mobile First ===== */
 .estado-puesto{
@@ -740,20 +750,10 @@ body{padding-bottom:76px;}
         <div class="card">
             <img src="Carlota.jpg" alt="Carlotas">
             <h3>Carlota</h3>
-            <style>
-.parpadeo {
-    animation: parpadear 1.5s infinite;
-}
-
-@keyframes parpadear {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-}
-</style>
-            <p class="precio">$50</p>
+            <h3 class="parpadeo">Ojo 👀 Carlota solo 2️⃣4️⃣ horas antes, por favor 🙏</h3>
+             <p class="precio">$50</p>
 <button class="btn-agregar" onclick="agregarProducto('Carlota',50)">➕ Agregar al pedido</button>
-
-              
+ 
 <details>
     <summary class="detalle-btn">
     Detalles del producto
