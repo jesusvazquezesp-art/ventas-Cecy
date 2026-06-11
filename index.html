@@ -571,6 +571,34 @@ body{padding-bottom:76px;}
     animation: parpadear 1.5s infinite;
 }
 
+.abierto{
+    background:#28a745;
+    color:white;
+    padding:12px;
+    border-radius:10px;
+    font-weight:bold;
+    text-align:center;
+}
+
+.proximo{
+    background:#ffc107;
+    color:black;
+    padding:12px;
+    border-radius:10px;
+    font-weight:bold;
+    text-align:center;
+}
+
+.cerrado{
+    background:#dc3545;
+    color:white;
+    padding:12px;
+    border-radius:10px;
+    font-weight:bold;
+    text-align:center;
+}
+
+    
 @keyframes parpadear {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.4; }
@@ -1312,33 +1340,52 @@ window.addEventListener("load", cargarCarrito);
 function actualizarEstadoAbierto(){
     const el=document.getElementById("estadoAbierto");
     if(!el) return;
+
     const ahora=new Date();
-    const dia=ahora.getDay(); // 0 domingo, 4 jueves, 5 viernes, 6 sábado
-    const h=ahora.getHours()+ahora.getMinutes()/60;
-    let abierto=false, texto="";
+    const dia=ahora.getDay();
+    const minutosActuales=ahora.getHours()*60+ahora.getMinutes();
 
-    if((dia===4 || dia===5) && h>=17 && h<22){
-        abierto=true; texto="🟢 ABIERTO AHORA · Cerramos 10:00 pm";
-    }else if(dia===6 && h>=18 && h<22){
-        abierto=true; texto="🟢 ABIERTO AHORA · Segundas del Camino Real";
-    }else if(dia===0 && h>=14 && h<22){
-        abierto=true; texto="🟢 ABIERTO AHORA · Cerramos 10:00 pm";
-    }else{
-        texto="⚠️ CERRADO AHORA · Revisa horarios";
+    let apertura=null;
+    let cierre=null;
+
+    if(dia===4 || dia===5){ // Jueves y Viernes
+        apertura=17*60;
+        cierre=22*60;
+    }else if(dia===6){ // Sábado
+        apertura=18*60;
+        cierre=22*60;
+    }else if(dia===0){ // Domingo
+        apertura=14*60;
+        cierre=22*60;
     }
 
-    el.className=abierto?"abierto":"cerrado";
-    el.textContent=texto;
-}
-function seleccionarRecogida(el,valor){
-    document.querySelectorAll(".opcion-recogida").forEach(x=>x.classList.remove("activa"));
-    el.classList.add("activa");
-    const input=document.getElementById("clienteHora");
-    if(input) input.value=valor;
-    if(valor==="Hora específica"){
-        input.value="";
-        input.focus();
+    if(apertura!==null){
+
+        // Abrimos en menos de 30 minutos
+        if(minutosActuales >= apertura-30 && minutosActuales < apertura){
+            el.className="proximo";
+            el.textContent="🟡 ABRIMOS EN MENOS DE 30 MINUTOS";
+            return;
+        }
+
+        // Cerramos pronto (últimos 30 minutos)
+        if(minutosActuales >= cierre-30 && minutosActuales < cierre){
+            el.className="cerrado";
+            el.textContent="🔴 CERRAMOS PRONTO";
+            return;
+        }
+
+        // Abierto
+        if(minutosActuales >= apertura && minutosActuales < cierre){
+            el.className="abierto";
+            el.textContent="🟢 ABIERTO AHORA";
+            return;
+        }
     }
+
+    // Cerrado
+    el.className="cerrado";
+    el.textContent="🔴 CERRADO AHORA";
 }
 function actualizarBarraMobile(){
     const cantidad=carrito.reduce((s,x)=>s+Number(x.cantidad),0);
