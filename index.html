@@ -277,16 +277,7 @@ details h3{
 }
 @media(max-width:520px){
     .panel-carrito{bottom:84px;}
-}
-<style>
-.parpadeo {
-    animation: parpadear 1.5s infinite;
-}
 
-@keyframes parpadear {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-}
 
             
 
@@ -576,6 +567,15 @@ body{padding-bottom:76px;}
 .estado-envio-web.warn{background:#fff8e1;color:#e65100;}
 .estado-envio-web.error{background:#ffebee;color:#b71c1c;}
 
+    .parpadeo {
+    animation: parpadear 1.5s infinite;
+}
+
+@keyframes parpadear {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
 </style>
     
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -750,7 +750,9 @@ body{padding-bottom:76px;}
         <div class="card">
             <img src="Carlota.jpg" alt="Carlotas">
             <h3>Carlota</h3>
-            <h3 class="parpadeo">Ojo 👀 Carlota solo 2️⃣4️⃣ horas antes, por favor 🙏</h3>
+
+<h3 class="parpadeo">Ojo 👀 Carlota solo 2️⃣4️⃣ horas antes, por favor 🙏</h3>
+            
              <p class="precio">$50</p>
 <button class="btn-agregar" onclick="agregarProducto('Carlota',50)">➕ Agregar al pedido</button>
  
